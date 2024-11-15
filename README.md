@@ -1,17 +1,18 @@
 # Cryptography---19CS412-classical-techqniques
 
-# Vigenere Cipher
-Vigenere Cipher using with different key values
+
+# Rail Fence Cipher
+Rail Fence Cipher using with different key values
 
 # AIM:
 
-To develop a simple C program to implement Vigenere Cipher.
+To develop a simple C program to implement Rail Fence Cipher.
 
 ## DESIGN STEPS:
 
 ### Step 1:
 
-Design of Vigenere Cipher algorithnm 
+Design of Rail Fence Cipher algorithnm 
 
 ### Step 2:
 
@@ -20,78 +21,67 @@ Implementation using C or pyhton code
 ### Step 3:
 
 Testing algorithm with different key values. 
-ALGORITHM DESCRIPTION:
-The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution.To encrypt, a table of alphabets can be used, termed a Vigenere square, or Vigenere table. It consists of the alphabet written out 26 times in different rows, each alphabet shifted cyclically to the left compared to the previous alphabet, corresponding to the 26 possible Caesar ciphers. At different points in the encryption process, the cipher uses a different alphabet from one of the rows used. The alphabet at each point depends on a repeating keyword.
-
-
 
 ## PROGRAM:
 ```
-#include <stdio.h>
-#include <string.h>
 
-// Function to perform Vigenère encryption
-void vigenereEncrypt(char *text, const char *key) {
-    int textLen = strlen(text);
-    int keyLen = strlen(key);
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
 
-    for (int i = 0; i < textLen; i++) {
-        char c = text[i];
-        if (c >= 'A' && c <= 'Z') {
-            // Encrypt uppercase letters
-            text[i] = ((c - 'A' + (key[i % keyLen] - 'A')) % 26) + 'A';
-        } else if (c >= 'a' && c <= 'z') {
-            // Encrypt lowercase letters
-            text[i] = ((c - 'a' + (key[i % keyLen] - 'A')) % 26) + 'a';
-        }
+int main()
+{
+    int i, j, k, l;
+    char a[20], c[20], d[20];
+
+    printf("\n\t\t RAIL FENCE TECHNIQUE");
+    printf("\n\nEnter the input string : ");
+    gets(a);
+    l = strlen(a);
+
+    for(i = 0, j = 0; i < l; i++)
+    {
+        if(i % 2 == 0)
+            c[j++] = a[i];
     }
-}
-
-// Function to perform Vigenère decryption
-void vigenereDecrypt(char *text, const char *key) {
-    int textLen = strlen(text);
-    int keyLen = strlen(key);
-
-    for (int i = 0; i < textLen; i++) {
-        char c = text[i];
-        if (c >= 'A' && c <= 'Z') {
-            // Decrypt uppercase letters
-            text[i] = ((c - 'A' - (key[i % keyLen] - 'A') + 26) % 26) + 'A';
-        } else if (c >= 'a' && c <= 'z') {
-            // Decrypt lowercase letters
-            text[i] = ((c - 'a' - (key[i % keyLen] - 'A') + 26) % 26) + 'a';
-        }
+    for(i = 0; i < l; i++)
+    {
+        if(i % 2 == 1)
+            c[j++] = a[i];
     }
-}
+    c[j] = '\0';
 
-int main() {
-    const char *key = "HARINI"; // Replace with your desired key
-    char message[] = "SAVEETHA ENGINEERING COLLEGE"; // Replace with your message
-    printf("Simulating Vignere cipher\n");
-    
-    // Encrypt the message
-    vigenereEncrypt(message, key);
-    printf("Encrypted Message: %s\n", message);
+    printf("\nCipher text after applying rail fence :");
+    printf("%s", c);
 
-    // Decrypt the message back to the original
-    vigenereDecrypt(message, key);
-    printf("Decrypted Message: %s\n", message);
+    if(l % 2 == 0)
+        k = l / 2;
+    else
+        k = (l / 2) + 1;
+
+    for(i = 0, j = 0; i < k; i++)
+    {
+        d[j] = c[i];
+        j = j + 2;
+    }
+    for(i = k, j = 1; i < l; i++)
+    {
+        d[j] = c[i];
+        j = j + 2;
+    }
+    d[l] = '\0';
+
+    printf("\nText after decryption : ");
+    printf("%s", d);
 
     return 0;
 }
 ```
+
 ## OUTPUT:
+![image](https://github.com/surrey-78/Cryptography---19CS412-classical-techqniques/assets/119559366/a5f4e5a4-6c59-4a3c-a9b8-f29d790e19fb)
 
 
-Simulating Vigenere Cipher
 
-![image](https://github.com/user-attachments/assets/3e5deae2-d40a-405b-9bd1-4d1c1dff1c0c)
-
-
-Input Message : SAVEETHA ENGINEERING COLLEGE
-
-Encrypted Message : ZAMMRBOA MAOPNVMEQUG KBTSEXM
-
-Decrypted Message : SAVEETHA ENGINEERING COLLEGE
 ## RESULT:
-The program for vignere cipher method is executed successfully
+The program is executed successfully
