@@ -1,17 +1,17 @@
 # Cryptography---19CS412-classical-techqniques
 
-# Hill Cipher
-Hill Cipher using with different key values
+# Vigenere Cipher
+Vigenere Cipher using with different key values
 
 # AIM:
 
-To develop a simple C program to implement Hill Cipher.
+To develop a simple C program to implement Vigenere Cipher.
 
 ## DESIGN STEPS:
 
 ### Step 1:
 
-Design of Hill Cipher algorithnm 
+Design of Vigenere Cipher algorithnm 
 
 ### Step 2:
 
@@ -21,49 +21,77 @@ Implementation using C or pyhton code
 
 Testing algorithm with different key values. 
 ALGORITHM DESCRIPTION:
-The Hill cipher is a substitution cipher invented by Lester S. Hill in 1929. Each letter is represented by a number modulo 26. To encrypt a message, each block of n letters is multiplied by an invertible n × n matrix, again modulus 26.
-To decrypt the message, each block is multiplied by the inverse of the matrix used for encryption. The matrix used for encryption is the cipher key, and it should be chosen randomly from the set of invertible n × n matrices (modulo 26).
-The cipher can, be adapted to an alphabet with any number of letters. All arithmetic just needs to be done modulo the number of letters instead of modulo 26.
+The Vigenere cipher is a method of encrypting alphabetic text by using a series of different Caesar ciphers based on the letters of a keyword. It is a simple form of polyalphabetic substitution.To encrypt, a table of alphabets can be used, termed a Vigenere square, or Vigenere table. It consists of the alphabet written out 26 times in different rows, each alphabet shifted cyclically to the left compared to the previous alphabet, corresponding to the 26 possible Caesar ciphers. At different points in the encryption process, the cipher uses a different alphabet from one of the rows used. The alphabet at each point depends on a repeating keyword.
+
 
 
 ## PROGRAM:
 ```
 #include <stdio.h>
+#include <string.h>
 
-int main() 
-{
-    unsigned int key[3][3] = {{6, 24, 1}, {13, 16, 10}, {20, 17, 15}};
-    unsigned int inverseKey[3][3] = {{8, 5, 10}, {21, 8, 21}, {21, 12, 8}};
+// Function to perform Vigenère encryption
+void vigenereEncrypt(char *text, const char *key) {
+    int textLen = strlen(text);
+    int keyLen = strlen(key);
 
-    char msg[4];
-    unsigned int enc[3] = {0}, dec[3] = {0};
+    for (int i = 0; i < textLen; i++) {
+        char c = text[i];
+        if (c >= 'A' && c <= 'Z') {
+            // Encrypt uppercase letters
+            text[i] = ((c - 'A' + (key[i % keyLen] - 'A')) % 26) + 'A';
+        } else if (c >= 'a' && c <= 'z') {
+            // Encrypt lowercase letters
+            text[i] = ((c - 'a' + (key[i % keyLen] - 'A')) % 26) + 'a';
+        }
+    }
+}
 
-    printf("Enter plain text: ");
-    scanf("%3s", msg);
+// Function to perform Vigenère decryption
+void vigenereDecrypt(char *text, const char *key) {
+    int textLen = strlen(text);
+    int keyLen = strlen(key);
 
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            enc[i] += key[i][j] * (msg[j] - 'A') % 26;
+    for (int i = 0; i < textLen; i++) {
+        char c = text[i];
+        if (c >= 'A' && c <= 'Z') {
+            // Decrypt uppercase letters
+            text[i] = ((c - 'A' - (key[i % keyLen] - 'A') + 26) % 26) + 'A';
+        } else if (c >= 'a' && c <= 'z') {
+            // Decrypt lowercase letters
+            text[i] = ((c - 'a' - (key[i % keyLen] - 'A') + 26) % 26) + 'a';
+        }
+    }
+}
 
-    printf("Encrypted Cipher Text: %c%c%c\n", enc[0] % 26 + 'A', enc[1] % 26 + 'A', enc[2] % 26 + 'A');
+int main() {
+    const char *key = "HARINI"; // Replace with your desired key
+    char message[] = "SAVEETHA ENGINEERING COLLEGE"; // Replace with your message
+    printf("Simulating Vignere cipher\n");
+    
+    // Encrypt the message
+    vigenereEncrypt(message, key);
+    printf("Encrypted Message: %s\n", message);
 
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            dec[i] += inverseKey[i][j] * enc[j] % 26;
-
-    printf("Decrypted Cipher Text: %c%c%c\n", dec[0] % 26 + 'A', dec[1] % 26 + 'A', dec[2] % 26 + 'A');
+    // Decrypt the message back to the original
+    vigenereDecrypt(message, key);
+    printf("Decrypted Message: %s\n", message);
 
     return 0;
 }
-
 ```
-
 ## OUTPUT:
-![Screenshot 2024-10-14 152534](https://github.com/user-attachments/assets/4794f566-e4d2-4112-b8b3-b0e0ab9da43a)
 
 
+Simulating Vigenere Cipher
 
-Input Message : SecurityLaboratory
-Padded Message : SECURITYLABORATORY Encrypted Message : EACSDKLCAEFQDUKSXU Decrypted Message : SECURITYLABORATORY
+![image](https://github.com/user-attachments/assets/3e5deae2-d40a-405b-9bd1-4d1c1dff1c0c)
+
+
+Input Message : SAVEETHA ENGINEERING COLLEGE
+
+Encrypted Message : ZAMMRBOA MAOPNVMEQUG KBTSEXM
+
+Decrypted Message : SAVEETHA ENGINEERING COLLEGE
 ## RESULT:
-The program is executed successfully
+The program for vignere cipher method is executed successfully
